@@ -1,10 +1,14 @@
 'use strict';
 
 //Global variables---->>>>
-var userSearchText;
+var userMovieSearchInput;
+var userMovieYearInput;
 
 var OMDb_URL = 'http://www.omdbapi.com/?';
 
+// $('#year').on('keyup', function(){
+//   userMovieYearInput = $('#year').val();
+// });
 
 
 //Start of movie search/submit button
@@ -12,20 +16,24 @@ $('#submit').on('click', function(event){
   //Look more into specifics of how this works
   event.preventDefault();
 
+  //Set year variable
+  userMovieYearInput = $('#year').val();
+
   //Clears the search results
   $('#movies').empty();
 
   //Get user entered movie title and trims it
-  userSearchText = $('#search').val().trim();
+  userMovieSearchInput = $('#search').val().trim();
 
-  console.log('The submit button event handler is working. User input = ' + userSearchText);
+  console.log('The submit button event handler is working. User input = ' + userMovieSearchInput);
 
 //Data to be be sent/requested from the OMDb
   var movieDataRequest = {
-      s: userSearchText,
+      s: userMovieSearchInput,
       plot: 'full',
       type: 'movie',
       r: 'json',
+      y: userMovieYearInput
     };
 
     $.getJSON(OMDb_URL, movieDataRequest, displayMoviesCallback);
@@ -67,7 +75,7 @@ $('#submit').on('click', function(event){
    $('#movies').append(function(){
 
      var noMovieFound = '<li class="no-movies">' +
-       '<i class="material-icons icon-help">help_outline</i>No movies found that match: ' + userSearchText + '</li>';
+       '<i class="material-icons icon-help">help_outline</i>No movies found that match: ' + userMovieSearchInput + '</li>';
 
        return noMovieFound;
    });
