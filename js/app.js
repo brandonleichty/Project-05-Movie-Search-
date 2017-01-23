@@ -34,24 +34,42 @@ $('#submit').on('click', function(event){
 
 
 
-
  function displayMoviesCallback(movie) {
 
+  if (movie.Response === 'True'){
   //****Read more about the $.each function
-  $.each(movie.Search, function( i, moviePropertie){
+    $.each(movie.Search, function( i, moviePropertie){
 
-    console.log(moviePropertie.Title + ' ' +moviePropertie.Year);
 
-      $('#movies').append(function() {
+        $('#movies').append(function() {
 
-        var searchResults =     '<li>' +
-                                  '<div class="poster-wrap">' +
-                                    '<img class="movie-poster" src=' + moviePropertie.Poster + '>' +
-                                  '</div>' +
-                                  '<span class="movie-title">' + moviePropertie.Title + '</span>' +
-                                  '<span class="movie-year">' + moviePropertie.Year + '</span>' +
-                                '</li>';
-        return searchResults;
-    })
-  });
-};
+          //START of List Item
+          var searchResults =     '<li><div class="poster-wrap">';
+
+          //Checks to see if there is a movie poster image available
+          if(moviePropertie.Poster === "N/A"){
+            searchResults += '<i class="material-icons poster-placeholder">crop_original</i></div>';
+          } else {
+            searchResults += '<img class="movie-poster" src=' + moviePropertie.Poster + '></div>';
+          }
+
+          searchResults +=          '<span class="movie-title">' + moviePropertie.Title + '</span>' +
+                                    '<span class="movie-year">' + moviePropertie.Year + '</span></li>';
+          //END of List Item
+
+          return searchResults;
+      })
+    });
+
+  //If no movie is found from the user query search, show an image that says "No movies found that match: 'search'"
+  } else if (movie.Response === 'False'){
+
+   $('#movies').append(function(){
+
+     var noMovieFound = '<li class="no-movies">' +
+       '<i class="material-icons icon-help">help_outline</i>No movies found that match: ' + userSearchText + '</li>';
+
+       return noMovieFound;
+   });
+  }
+}
