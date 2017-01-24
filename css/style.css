@@ -8,7 +8,7 @@
 
 body {
   font: 1em/1.5 'Roboto', sans-serif;
-  color: #222;
+  color: #FE2D75;
   background: #f6f7f7;
   padding-top: 145px;
   padding-bottom: 3em;
@@ -95,7 +95,7 @@ button {
 .icn-movie {
   font-size: 6em;
   margin-bottom: 12px;
-  color: #dfdfdf;
+  color: #FE2D75;
   display: block;
 }
 
@@ -103,7 +103,7 @@ button {
 
 .no-movies,
 .desc  {
-  color: #b0b0b0;
+  color: #FE2D75;
   height: 140px;
   margin-top: 50px;
   text-align: center;

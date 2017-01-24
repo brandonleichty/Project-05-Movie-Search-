@@ -83,3 +83,4 @@ $('#submit').on('click', function(event){
    });
   }
 }
+//END of displayMoviesCallback
