@@ -74,9 +74,9 @@ $('#submit').on('click', function(event){
   //If no movie is found from the user query search, show an image that says "No movies found that match: 'search'"
   } else if (movie.Response === 'False'){
 
-   $('#movies').append(function(){
+   $('#movies').prepend(function(){
 
-     var noMovieFound = '<li class="no-movies">' +
+     var noMovieFound = '<li class="no-movies desc">' +
        '<i class="material-icons icon-help">help_outline</i>No movies found that match: ' + userMovieSearchInput + '</li>';
 
        return noMovieFound;
