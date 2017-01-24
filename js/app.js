@@ -6,10 +6,6 @@ var userMovieYearInput;
 
 var OMDb_URL = 'http://www.omdbapi.com/?';
 
-// $('#year').on('keyup', function(){
-//   userMovieYearInput = $('#year').val();
-// });
-
 
 //Start of movie search/submit button
 $('#submit').on('click', function(event){
@@ -41,6 +37,11 @@ $('#submit').on('click', function(event){
 
 }); //End of #submit click event handler function
 
+
+$('ul').on('click', 'li', function(){
+  $('#movies').find('li').hide();
+  console.log("THIS WORKED!");
+});
 
 
  function displayMoviesCallback(movie) {
