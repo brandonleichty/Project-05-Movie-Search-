@@ -30,6 +30,7 @@ $('#submit').on('click', function(event){
 //Data to be be sent/requested from the OMDb
   var movieDataRequest = {
       s: userMovieSearchInput,
+      i: '',
       plot: 'full',
       type: 'movie',
       r: 'json',
@@ -48,6 +49,7 @@ $('#submit').on('click', function(event){
   //****Read more about the $.each function
     $.each(movie.Search, function( i, moviePropertie){
 
+      var imdbHTML = 'http://imdb.com/title/' + moviePropertie.imdbID;
 
         $('#movies').append(function() {
 
@@ -58,15 +60,15 @@ $('#submit').on('click', function(event){
           if(moviePropertie.Poster === "N/A"){
             searchResults += '<i class="material-icons poster-placeholder">crop_original</i></div>';
           } else {
-            searchResults += '<img class="movie-poster" src=' + moviePropertie.Poster + '></div>';
+            searchResults += '<a href="' + imdbHTML + '" target="_blank"><img class="movie-poster" src=' + moviePropertie.Poster + '></div></a>';
           }
 
           searchResults +=          '<span class="movie-title">' + moviePropertie.Title + '</span>' +
-                                    '<span class="movie-year">' + moviePropertie.Year + '</span></li>';
+                                    '<span class="movie-year">' + moviePropertie.Year + '</span></li></a>';
           //END of List Item
 
           return searchResults;
-      })
+      });
     });
 
   //If no movie is found from the user query search, show an image that says "No movies found that match: 'search'"
