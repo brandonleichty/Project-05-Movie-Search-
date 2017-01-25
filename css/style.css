@@ -10,7 +10,7 @@ body {
   font: 1em/1.5 'Roboto', sans-serif;
   color: #FE2D75;
   background: #f6f7f7;
-  padding-top: 145px;
+  padding-top: 120px;
   padding-bottom: 3em;
   margin: 0;
 }
@@ -155,11 +155,34 @@ button {
 ==================================== */
 
 .inner,
+.back-search,
 .main-content {
   width: 90%;
   max-width: 1025px;
   margin: auto;
 }
+
+.description-background {
+  background: #757575;
+  width: 100%;
+  height: 280px;
+}
+.back-search-link {
+    font-size: 1.4em;
+    line-height: 80px;
+    letter-spacing: 1px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    padding-top: 40px;
+    align-items: center;
+  }
+
+.chevron-left{
+  margin-left: -12px;
+  font-size: 40px;
+}
+
 
 .main-header {
   position: fixed;
@@ -240,7 +263,7 @@ button {
 
 @media (min-width: 769px) {
   body {
-    padding-top: 115px;
+    padding-top: 80px;
   }
 
   .main-title {
