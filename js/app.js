@@ -59,9 +59,16 @@ $('ul').on('click', 'li', function(){
                   '<div class="back-search-link back-search" id="backSearchLnk">' +
                     '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
                   '</div>' +
-               '</div>';
+                '<div class="moviePropertieWrap">' +
+                    '<div>' + $('#movieTitle').text() + ' (' + $('#movieYear').text() + ')' + '</div>' +
 
-               console.log("The movie clicked is: " + this.moviePropertie.Title)
+                  '<div>' +
+                      '<img src="' + $(this).find('img').attr('src') + '">' +
+                  '</div>' +
+                '</div>';
+
+
+               console.log("The movie poster is clicked is: " + $(this).find('img').attr('src'));
 
   $('#main-header').after(html);
 
@@ -100,11 +107,11 @@ $('body').on('click', '#backSearchLnk', function(){
             searchResults += '<i class="material-icons poster-placeholder">crop_original</i></div>';
           } else {
                             //'<a href="' + imdbHTML + '" target="_blank"><img class="movie-poster" src=' + moviePropertie.Poster + '></div></a>';
-            searchResults += '<img class="movie-poster" src=' + moviePropertie.Poster + '></div>';
+            searchResults += '<img class="movie-poster" id="#moviePoster" src=' + moviePropertie.Poster + '></div>';
           }
 
-          searchResults +=          '<span class="movie-title">' + moviePropertie.Title + '</span>' +
-                                    '<span class="movie-year">' + moviePropertie.Year + '</span></li></a>';
+          searchResults +=          '<span class="movie-title" id="movieTitle">' + moviePropertie.Title + '</span>' +
+                                    '<span class="movie-year" id="movieYear">' + moviePropertie.Year + '</span></li></a>';
           //END of List Item
 
           return searchResults;
