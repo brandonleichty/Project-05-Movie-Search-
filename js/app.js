@@ -47,52 +47,45 @@ $('#submit').on('click', function(event){
 $('ul').on('click', 'li', function(){
   $('#movies').find('li').hide();
 
-  // var html = '<div class="description-background" id="descriptionBackground">' +
-  //               '<div class="back-search" id="backSearchLnk">' +
-  //                 '<span class="back-search-link"><i class="material-icons">chevron_left</i>Search</span>' +
+
+  // var html =   '<div class="description-background" id="descriptionBackground">' +
+  //               '<div class="back-search-link back-search" id="backSearchLnk">' +
+  //                 '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
   //               '</div>' +
-  //            '</div>';
+  //             '<div class="movieDescriptionWrap">' +
+  //
+  //               '<div>' +
+  //                   '<img class="movieDescriptionPoster" src="' + $(this).find('img').attr('src') + '">' +
+  //               '</div>' +
+  //               '<div class="movieDescriptionTitleAndPlot">' +
+  //                 '<div class="movieDescriptionTitle">' + $('#movieTitle').text() + '<br/>(' + $('#movieYear').text() + ')' + '</div>';
 
-    var selectedMovie = $('#movieTitle').text();
+    var selectedMovie = $(this).attr('imdbTag');
 
-    var plot;
+    $.getJSON(OMDb_URL,{i: selectedMovie, plot: 'full' }, function(data) {
 
-    $.ajax({
-        url: OMDb_URL,
-        async: false,
-        data: {t: selectedMovie, plot: 'full' },
-        success: function(plotData){
-           plot = plotData.Plot;
-        }
-        })
+      var html =   '<div class="description-background" id="descriptionBackground">' +
+                      '<div class="back-search-link back-search" id="backSearchLnk">' +
+                       '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
+                      '</div>' +
 
-    $.getJSON(OMDb_URL, {t: selectedMovie, plot: 'full' }, function(plotData){
+                   '<div class="descriptionContainer">' +
+                    '<div>' +
+                        '<img class="movieDescriptionPoster" src="' + data.Poster + '">' +
+                    '</div>' +
+                    '<div class="desciptionInfo">' +
+                      '<div class="movieDescriptionTitle">' + data.Title + '<br/>(' + data.Year + ')' + '</div>' +
 
-       plot = plotData.Plot;
+                      '<h3>IMDB Rating ' + data.imdbRating + '</h3>' +
+                      '<h4>Plot synopsis:</h4>' +
+                      '<div class="movieDescriptionPlot">' + data.Plot + '</div>' +
+                        '<h3 class="awards"><i class="material-icons">star</i>Awards: ' + data.Awards + '</h3>' +
+                      '<a class="imdb-link" href="http://www.imdb.com/title/' + data.imdbID + '" target="_blank">View on IMDB</a>' +
+                    '</div>' +
+                  '</div>';
 
-    });
-
-    var html =   '<div class="description-background" id="descriptionBackground">' +
-                  '<div class="back-search-link back-search" id="backSearchLnk">' +
-                    '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
-                  '</div>' +
-                '<div class="movieDescriptionWrap">' +
-
-                  '<div>' +
-                      '<img class="movieDescriptionPoster" src="' + $(this).find('img').attr('src') + '">' +
-                  '</div>' +
-                  '<div class="movieDescriptionTitleAndPlot">' +
-                    '<div class="movieDescriptionTitle">' + $('#movieTitle').text() + '<br/>(' + $('#movieYear').text() + ')' + '</div>' +
-
-                    '<div class="movieDescriptionPlot">' + plot + '</div>' +
-                  '</div>' +
-                '</div>';
-
-
-               console.log("The movie poster is clicked is: " + $(this).find('img').attr('src'));
-
-  $('#main-header').after(html);
-
+                  $('#main-header').after(html);
+        });
   console.log("THIS WORKED!");
 });
 
@@ -102,7 +95,6 @@ $('ul').on('click', 'li', function(){
 
 $('body').on('click', '#backSearchLnk', function(){
     $('#descriptionBackground').remove();
-    console.log("Go back to original search");
     $('#movies').find('li').fadeIn();
 });
 
