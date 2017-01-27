@@ -31,8 +31,8 @@ $('#submit').on('click', function(event){
 //Data to be be sent/requested from the OMDb
   var movieDataRequest = {
       s: userMovieSearchInput,
-      i: '',
       plot: 'full',
+      i: '',
       type: 'movie',
       r: 'json',
       y: userMovieYearInput
@@ -41,8 +41,6 @@ $('#submit').on('click', function(event){
     $.getJSON(OMDb_URL, movieDataRequest, displayMoviesCallback);
 
 }); //End of #submit click event handler function
-
-
 
 
 
@@ -55,15 +53,38 @@ $('ul').on('click', 'li', function(){
   //               '</div>' +
   //            '</div>';
 
+    var selectedMovie = $('#movieTitle').text();
+
+    var plot;
+
+    $.ajax({
+        url: OMDb_URL,
+        async: false,
+        data: {t: selectedMovie, plot: 'full' },
+        success: function(plotData){
+           plot = plotData.Plot;
+        }
+        })
+
+    $.getJSON(OMDb_URL, {t: selectedMovie, plot: 'full' }, function(plotData){
+
+       plot = plotData.Plot;
+
+    });
+
     var html =   '<div class="description-background" id="descriptionBackground">' +
                   '<div class="back-search-link back-search" id="backSearchLnk">' +
                     '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
                   '</div>' +
-                '<div class="moviePropertieWrap">' +
-                    '<div>' + $('#movieTitle').text() + ' (' + $('#movieYear').text() + ')' + '</div>' +
+                '<div class="movieDescriptionWrap">' +
 
                   '<div>' +
-                      '<img src="' + $(this).find('img').attr('src') + '">' +
+                      '<img class="movieDescriptionPoster" src="' + $(this).find('img').attr('src') + '">' +
+                  '</div>' +
+                  '<div class="movieDescriptionTitleAndPlot">' +
+                    '<div class="movieDescriptionTitle">' + $('#movieTitle').text() + '<br/>(' + $('#movieYear').text() + ')' + '</div>' +
+
+                    '<div class="movieDescriptionPlot">' + plot + '</div>' +
                   '</div>' +
                 '</div>';
 
@@ -100,7 +121,7 @@ $('body').on('click', '#backSearchLnk', function(){
         $('#movies').append(function() {
 
           //START of List Item
-          var searchResults =     '<li><div class="poster-wrap">';
+          var searchResults =     '<li imdbTag="' + moviePropertie.imdbID + '"><div class="poster-wrap">';
 
           //Checks to see if there is a movie poster image available
           if(moviePropertie.Poster === "N/A"){
