@@ -182,15 +182,22 @@ h4 {
   width: 100%;
   height: 256px;
 }
+
 .back-search-link {
-    font-size: 1.4em;
-    line-height: 80px;
-    letter-spacing: 1px;
-    color: white;
-    cursor: pointer;
+  font-size: 1em;
+  letter-spacing: 1px;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back-search-container {
+
     display: flex;
-    padding-top: 40px;
-    align-items: center;
+    padding-top: 50px;
+    padding-bottom: 36px;
+    justify-content: flex-start;
   }
 
 .chevron-left{
@@ -335,6 +342,8 @@ h4 {
 }
 
 @media (min-width: 769px) {
+
+
   body {
     padding-top: 80px;
   }
@@ -352,12 +361,15 @@ h4 {
   .movie-list li {
     width: 33.333333333%;
   }
+
+
 }
 
 @media (min-width: 769px) and (max-width: 999px) {
   .movie-list li:nth-of-type(3n+1) {
     clear: left;
   }
+
 }
 
 @media (min-width: 1000px) {
@@ -368,4 +380,24 @@ h4 {
   .movie-list li:nth-of-type(4n+1) {
     clear: left;
   }
+
+}
+@media (max-width: 1000px){
+  .desciptionInfo{
+    flex: 1 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .movieDescriptionTitle{
+    color: #656565;
+  }
+
+  .posterInfoWrap {
+    flex: 0;
+  }
+
+
 }

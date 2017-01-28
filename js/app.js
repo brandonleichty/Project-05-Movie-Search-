@@ -1,6 +1,9 @@
 'use strict';
 
-//Global variables---->>>>
+//***********************//
+//Global variables---->>>//
+//***********************//
+
 var userMovieSearchInput;
 var userMovieYearInput;
 
@@ -8,35 +11,34 @@ var OMDb_URL = 'http://www.omdbapi.com/?';
 
 
 
+  //Start of movie search/submit button
+  $('#submit').on('click', function(event){
+      //Look more into specifics of how this works
+      event.preventDefault();
 
-//Start of movie search/submit button
-$('#submit').on('click', function(event){
-  //Look more into specifics of how this works
-  event.preventDefault();
+      //Set year variable
+      userMovieYearInput = $('#year').val();
 
-  //Set year variable
-  userMovieYearInput = $('#year').val();
+      $('#descriptionBackground').remove();
 
-  $('#descriptionBackground').remove();
-
-  //Clears the search results
-  $('#movies').empty();
+      //Clears the search results
+      $('#movies').empty();
 
 
-  //Get user entered movie title and trims it
-  userMovieSearchInput = $('#search').val().trim();
+      //Get user entered movie title and trims it
+      userMovieSearchInput = $('#search').val().trim();
 
-  console.log('The submit button event handler is working. User input = ' + userMovieSearchInput);
+      console.log('The submit button event handler is working. User input = ' + userMovieSearchInput);
 
-//Data to be be sent/requested from the OMDb
-  var movieDataRequest = {
-      s: userMovieSearchInput,
-      plot: 'full',
-      i: '',
-      type: 'movie',
-      r: 'json',
-      y: userMovieYearInput
-    };
+     //Data to be be sent/requested from the OMDb
+      var movieDataRequest = {
+          s: userMovieSearchInput,
+          plot: 'full',
+          i: '',
+          type: 'movie',
+          r: 'json',
+          y: userMovieYearInput
+        };
 
     $.getJSON(OMDb_URL, movieDataRequest, displayMoviesCallback);
 
@@ -44,21 +46,9 @@ $('#submit').on('click', function(event){
 
 
 
+
 $('ul').on('click', 'li', function(){
   $('#movies').find('li').hide();
-
-
-  // var html =   '<div class="description-background" id="descriptionBackground">' +
-  //               '<div class="back-search-link back-search" id="backSearchLnk">' +
-  //                 '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
-  //               '</div>' +
-  //             '<div class="movieDescriptionWrap">' +
-  //
-  //               '<div>' +
-  //                   '<img class="movieDescriptionPoster" src="' + $(this).find('img').attr('src') + '">' +
-  //               '</div>' +
-  //               '<div class="movieDescriptionTitleAndPlot">' +
-  //                 '<div class="movieDescriptionTitle">' + $('#movieTitle').text() + '<br/>(' + $('#movieYear').text() + ')' + '</div>';
 
     var selectedMovie = $(this).attr('imdbTag');
 
@@ -66,10 +56,11 @@ $('ul').on('click', 'li', function(){
 
       var html =   '<div class="description-background" id="descriptionBackground">' +
 
-                      '<div class="back-search-link back-search" id="backSearchLnk">' +
+                      '<div class="back-search-container back-search">' +
+                        '<div class="back-search-link" id="backSearchLnk">' +
                        '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
+                       '</div>' +
                       '</div>' +
-
 
                        '<div class="descriptionContainer">' +
 
@@ -79,23 +70,24 @@ $('ul').on('click', 'li', function(){
                         '<div class="desciptionInfo">' +
                           '<div class="movieDescriptionTitle">' + data.Title + ' (' + data.Year + ')' + '</div>' +
 
-                      '<h3>IMDB Rating ' + data.imdbRating + '</h3>' +
-                      '<h4>Plot synopsis:</h4>' +
-                      '<div class="movieDescriptionPlot">' + data.Plot + '</div>' +
-                        '<h3 class="awards"><i class="material-icons star">star</i>Awards: ' + data.Awards + '</h3>' +
-                      '<a class="imdb-link" href="http://www.imdb.com/title/' + data.imdbID + '" target="_blank">View on IMDB</a>' +
-                    '</div>' +
+                            '<h3>IMDB Rating ' + data.imdbRating + '</h3>' +
+                            '<h4>Plot synopsis:</h4>' +
+                            '<div class="movieDescriptionPlot">' + data.Plot + '</div>' +
+                            '<h3 class="awards"><i class="material-icons star">star</i>Awards: ' + data.Awards + '</h3>' +
+                          '<a class="imdb-link" href="http://www.imdb.com/title/' + data.imdbID + '" target="_blank">View on IMDB</a>' +
+                      '</div>' +
                   '</div>';
 
-                  $('#main-header').after(html);
+            //Appends movie description html below the main-header
+            $('#main-header').after(html);
         });
-  console.log("THIS WORKED!");
 });
 
 
 
 
 
+//When the user clicks "Search Results," the movie description is removed--and the previous seach results are un-hidden
 $('body').on('click', '#backSearchLnk', function(){
     $('#descriptionBackground').remove();
     $('#movies').find('li').fadeIn();
@@ -104,7 +96,7 @@ $('body').on('click', '#backSearchLnk', function(){
 
 
 
-
+//Call back for $.getJSON function that gets the required JSON data. This function goes through each movie and appends the proper HTML.
  function displayMoviesCallback(movie) {
 
   if (movie.Response === 'True'){
@@ -128,8 +120,8 @@ $('body').on('click', '#backSearchLnk', function(){
 
           searchResults +=          '<span class="movie-title" id="movieTitle">' + moviePropertie.Title + '</span>' +
                                     '<span class="movie-year" id="movieYear">' + moviePropertie.Year + '</span></li></a>';
-          //END of List Item
 
+          //END of List Item
           return searchResults;
       });
     });
