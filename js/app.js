@@ -65,21 +65,24 @@ $('ul').on('click', 'li', function(){
     $.getJSON(OMDb_URL,{i: selectedMovie, plot: 'full' }, function(data) {
 
       var html =   '<div class="description-background" id="descriptionBackground">' +
+
                       '<div class="back-search-link back-search" id="backSearchLnk">' +
                        '<i class="material-icons chevron-left">chevron_left</i>Search Results' +
                       '</div>' +
 
-                   '<div class="descriptionContainer">' +
-                    '<div>' +
-                        '<img class="movieDescriptionPoster" src="' + data.Poster + '">' +
-                    '</div>' +
-                    '<div class="desciptionInfo">' +
-                      '<div class="movieDescriptionTitle">' + data.Title + '<br/>(' + data.Year + ')' + '</div>' +
+
+                       '<div class="descriptionContainer">' +
+
+                        '<div class="posterInfoWrap">' +
+                            '<img class="movieDescriptionPoster" src="' + data.Poster + '">' +
+                        '</div>' +
+                        '<div class="desciptionInfo">' +
+                          '<div class="movieDescriptionTitle">' + data.Title + ' (' + data.Year + ')' + '</div>' +
 
                       '<h3>IMDB Rating ' + data.imdbRating + '</h3>' +
                       '<h4>Plot synopsis:</h4>' +
                       '<div class="movieDescriptionPlot">' + data.Plot + '</div>' +
-                        '<h3 class="awards"><i class="material-icons">star</i>Awards: ' + data.Awards + '</h3>' +
+                        '<h3 class="awards"><i class="material-icons star">star</i>Awards: ' + data.Awards + '</h3>' +
                       '<a class="imdb-link" href="http://www.imdb.com/title/' + data.imdbID + '" target="_blank">View on IMDB</a>' +
                     '</div>' +
                   '</div>';
